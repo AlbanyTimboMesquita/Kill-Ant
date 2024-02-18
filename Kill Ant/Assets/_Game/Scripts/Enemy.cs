@@ -5,19 +5,23 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public float speed;
-    private 
+    private Animator myAnimator;
     void Start()
     {
-        
+        myAnimator=GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Movement();        
+        Movement();
+        AnimationSpeed();        
     }
     private void Movement(){
         transform.Translate(Vector2.down*(speed*Time.deltaTime));
 
+    }
+    private void AnimationSpeed(){
+        myAnimator.SetFloat("Speed",speed);
     }
 }
