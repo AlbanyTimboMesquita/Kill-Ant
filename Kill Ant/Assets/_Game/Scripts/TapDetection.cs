@@ -22,7 +22,6 @@ public class TapDetection : MonoBehaviour
             if(hit.collider != null){
                 
                 TapObject(hit);
-                enemy.Dead();
                 tapControl=false;
             }
 
