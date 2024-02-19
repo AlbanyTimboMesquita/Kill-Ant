@@ -33,7 +33,7 @@ public class TapDetection : MonoBehaviour
             hit.collider.gameObject.GetComponent<Enemy>().Dead(); //matando formiga
             hit.collider.gameObject.GetComponent<Enemy>().PlayAudio(tapControl);//som ao morrer
             hit.collider.gameObject.GetComponent<BoxCollider2D>().enabled = false;//desativando box collider
-            Debug.Log(hit.transform.name);
+            //Debug.Log(hit.transform.name);
         }
     }
 }

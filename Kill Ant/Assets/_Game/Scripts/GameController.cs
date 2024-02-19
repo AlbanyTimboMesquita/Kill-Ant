@@ -9,12 +9,14 @@ public class GameController : MonoBehaviour
     [HideInInspector] public int enemyCount;
     private UiController uiController;
     public Transform allEnemiesParent;
+    [HideInInspector] public int highScore;
     
     private Spawner spawner;
 
     private void Awake() {
         uiController = FindObjectOfType<UiController>();
         spawner = FindObjectOfType<Spawner>();
+        GetScore();
     }
     void Start()
     {
@@ -24,6 +26,7 @@ public class GameController : MonoBehaviour
         uiController = FindObjectOfType<UiController>();
         spawner = FindObjectOfType<Spawner>();
         spawner.gameObject.GetComponent<Spawner>().enabled=false;
+        
     }
 
     // Update is called once per frame
@@ -48,4 +51,17 @@ public class GameController : MonoBehaviour
         uiController.txtScore.text=totalScore.ToString();
         spawner.gameObject.GetComponent<Spawner>().enabled=true;
     }
+    public void SaveScore(){
+        if(totalScore> highScore){
+        PlayerPrefs.SetInt("highscore",totalScore);
+        uiController.txtHighScore.text = "Maior Pontuação: "+totalScore.ToString();
+
+        }
+    }
+    public int GetScore(){
+        highScore = PlayerPrefs.GetInt("highscore");
+        
+        return highScore;
+    }
+
 }

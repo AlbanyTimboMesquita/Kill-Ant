@@ -6,7 +6,7 @@ using TMPro;
 
 public class UiController : MonoBehaviour
 {
-    public TMP_Text txtScore;
+    public TMP_Text txtScore,txtHighScore;
     public Image[] imageLifes;
     public GameObject panelGame, panelPause, allLifes, panelMainMenu;
     private GameController gameController;
@@ -16,7 +16,7 @@ public class UiController : MonoBehaviour
         panelGame.gameObject.SetActive(false);
         panelPause.gameObject.SetActive(false);
         gameController=FindObjectOfType<GameController>();
-        
+        txtHighScore.text = "Maior Pontuação: " + gameController.highScore.ToString();
     }
 
     // Update is called once per frame
