@@ -9,12 +9,21 @@ public class GameController : MonoBehaviour
     [HideInInspector] public int enemyCount;
     private UiController uiController;
     public Transform allEnemiesParent;
+    
+    private Spawner spawner;
 
+    private void Awake() {
+        uiController = FindObjectOfType<UiController>();
+        spawner = FindObjectOfType<Spawner>();
+    }
     void Start()
     {
+        
         totalScore=0;
         enemyCount=0;
         uiController = FindObjectOfType<UiController>();
+        spawner = FindObjectOfType<Spawner>();
+        spawner.gameObject.GetComponent<Spawner>().enabled=false;
     }
 
     // Update is called once per frame
@@ -31,5 +40,12 @@ public class GameController : MonoBehaviour
             Destroy(child.gameObject);
          }
 
+    }
+    public void StartGame(){
+        
+        totalScore=0;
+        enemyCount=0;
+        uiController.txtScore.text=totalScore.ToString();
+        spawner.gameObject.GetComponent<Spawner>().enabled=true;
     }
 }

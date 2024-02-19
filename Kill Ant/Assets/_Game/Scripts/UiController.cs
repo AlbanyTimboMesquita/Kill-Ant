@@ -8,11 +8,12 @@ public class UiController : MonoBehaviour
 {
     public TMP_Text txtScore;
     public Image[] imageLifes;
-    public GameObject panelGame, panelPause, allLifes;
+    public GameObject panelGame, panelPause, allLifes, panelMainMenu;
     private GameController gameController;
     void Start()
     {
-        panelGame.gameObject.SetActive(true);
+        panelMainMenu.gameObject.SetActive(true);
+        panelGame.gameObject.SetActive(false);
         panelPause.gameObject.SetActive(false);
         gameController=FindObjectOfType<GameController>();
         
@@ -40,6 +41,7 @@ public class UiController : MonoBehaviour
         Time.timeScale = 1f;
         panelGame.gameObject.SetActive(false);
         panelPause.gameObject.SetActive(false);
+        
     }
 
     public void ButtonRestart(){
@@ -51,6 +53,12 @@ public class UiController : MonoBehaviour
          {
             child.gameObject.SetActive(true);
          }
+    }
+    public void ButtonStartGame(){
+
+        panelMainMenu.gameObject.SetActive(false);
+        panelGame.gameObject.SetActive(true);
+        gameController.StartGame();
     }
 
 }
