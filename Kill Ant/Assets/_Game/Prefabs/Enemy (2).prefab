@@ -54,6 +54,7 @@ MonoBehaviour:
   sprites:
   - {fileID: 0}
   - {fileID: 0}
+  score: 20
 --- !u!61 &6304532759525217666
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -144,7 +145,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.343
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0
