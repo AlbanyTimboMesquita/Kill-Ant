@@ -1506,7 +1506,6 @@ MonoBehaviour:
   totalScore: 0
   enemyCount: 0
   allEnemiesParent: {fileID: 2036838877}
-  startGame: 0
 --- !u!4 &954166803
 Transform:
   m_ObjectHideFlags: 0
