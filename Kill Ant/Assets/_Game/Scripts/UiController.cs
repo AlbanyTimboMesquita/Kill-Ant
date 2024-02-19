@@ -7,6 +7,7 @@ using TMPro;
 public class UiController : MonoBehaviour
 {
     public TMP_Text txtScore;
+    public Image[] imageLifes;
     void Start()
     {
         
