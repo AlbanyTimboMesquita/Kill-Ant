@@ -6,23 +6,23 @@ using TMPro;
 
 public class UiController : MonoBehaviour
 {
-    public TMP_Text txtScore,txtHighScore;
+    public TMP_Text txtScore,txtHighScore,txtPontuacaoAtual;
     public Image[] imageLifes;
-    public GameObject panelGame, panelPause, allLifes, panelMainMenu;
+    [SerializeField] private  GameObject panelGame, panelPause, allLifes, panelMainMenu;
+    public GameObject panelGameOver;
     private GameController gameController;
     void Start()
     {
+      Initialize();  
+    }
+    private void Initialize(){
         panelMainMenu.gameObject.SetActive(true);
+        panelGameOver.gameObject.SetActive(false);
         panelGame.gameObject.SetActive(false);
         panelPause.gameObject.SetActive(false);
         gameController=FindObjectOfType<GameController>();
         txtHighScore.text = "Maior Pontuação: " + gameController.highScore.ToString();
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
     public void UpdateScore(int score){
         txtScore.text = score.ToString();
@@ -39,15 +39,16 @@ public class UiController : MonoBehaviour
     }
     public void ButtonBackMainMenu(){
         Time.timeScale = 1f;
-        panelGame.gameObject.SetActive(false);
-        panelPause.gameObject.SetActive(false);
-        
+        gameController.StopGame();
+        Initialize();
+        gameController.BackToMainMenu();
     }
 
     public void ButtonRestart(){
         Time.timeScale = 1f;
         panelGame.gameObject.SetActive(true);
         panelPause.gameObject.SetActive(false);
+        panelGameOver.gameObject.SetActive(false);
         gameController.Restart();
         foreach (Transform child in allLifes.transform)
          {

@@ -2,20 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class GameController : MonoBehaviour
 {
     public AudioClip[] audioEnemies;
-    [HideInInspector] public int totalScore;
-    [HideInInspector] public int enemyCount;
+    [HideInInspector] public int totalScore,enemyCount,highScore;
     private UiController uiController;
     public Transform allEnemiesParent;
-    [HideInInspector] public int highScore;
-    
     private Spawner spawner;
+    private Destroyer destroyer;
+    [SerializeField] private AudioSource music;
+    
 
     private void Awake() {
         uiController = FindObjectOfType<UiController>();
         spawner = FindObjectOfType<Spawner>();
+        destroyer = FindObjectOfType<Destroyer>();
         GetScore();
     }
     void Start()
@@ -26,23 +28,35 @@ public class GameController : MonoBehaviour
         uiController = FindObjectOfType<UiController>();
         spawner = FindObjectOfType<Spawner>();
         spawner.gameObject.GetComponent<Spawner>().enabled=false;
+        music.volume=0.4f;
         
     }
+    public void GameOver(){
+        spawner.gameObject.GetComponent<Spawner>().enabled=false;
+        destroyer.gameObject.GetComponent<BoxCollider2D>().enabled=false;
+        DestruirInimigosRestantes();
+        uiController.txtPontuacaoAtual.text = "Pontuação Atual: "+totalScore.ToString();
+    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void DestroyEnemy(Collider2D target){
+
+        enemyCount++;
+        if(enemyCount<5){
+            uiController.imageLifes[enemyCount - 1].gameObject.SetActive(false);
+        }else{
+            uiController.panelGameOver.gameObject.SetActive(true);
+            GameOver();
+            SaveScore();         
+            }
+        Destroy(target.gameObject);
     }
     public void Restart(){
          totalScore=0;
          enemyCount=0;
          uiController.txtScore.text=totalScore.ToString();
-         foreach (Transform child in allEnemiesParent.transform)
-         {
-            Destroy(child.gameObject);
-         }
-
+         spawner.gameObject.GetComponent<Spawner>().enabled=true;
+         destroyer.gameObject.GetComponent<BoxCollider2D>().enabled=true;
+         DestruirInimigosRestantes();
     }
     public void StartGame(){
         
@@ -50,6 +64,8 @@ public class GameController : MonoBehaviour
         enemyCount=0;
         uiController.txtScore.text=totalScore.ToString();
         spawner.gameObject.GetComponent<Spawner>().enabled=true;
+        music.volume=0.1f;
+
     }
     public void SaveScore(){
         if(totalScore> highScore){
@@ -64,4 +80,23 @@ public class GameController : MonoBehaviour
         return highScore;
     }
 
+    public void StopGame(){
+        
+        totalScore=0;
+        enemyCount=0;
+        uiController.txtScore.text=totalScore.ToString();
+        spawner.gameObject.GetComponent<Spawner>().enabled=false;
+        DestruirInimigosRestantes();
+    }
+    public void BackToMainMenu(){
+        music.volume=0.4f;
+    }
+
+    public void DestruirInimigosRestantes(){
+        foreach (Transform child in allEnemiesParent.transform)
+         {
+            Destroy(child.gameObject);
+         }
+
+    }
 }

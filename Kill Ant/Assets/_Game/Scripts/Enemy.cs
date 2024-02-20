@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -10,7 +11,7 @@ public class Enemy : MonoBehaviour
     private GameController gameController;
     private UiController uiController;
 
-    public int score;
+    [SerializeField] private int score;
     void Start()
     {
         myAnimator=GetComponent<Animator>();
@@ -24,8 +25,17 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         Movement();
-        AnimationSpeed();        
+        AnimationSpeed();
+        AtualizarVelocidadeInimigos();        
     }
+
+    private void AtualizarVelocidadeInimigos()
+    {
+        
+        //speed=1f+((float)Time.timeAsDouble/100) ;
+        
+    }
+
     private void Movement(){
         transform.Translate(Vector2.down*(speed*Time.deltaTime));
 
@@ -49,4 +59,5 @@ public class Enemy : MonoBehaviour
             audioSource.Play();
         }
     }
+    
 }
